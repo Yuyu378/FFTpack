@@ -27,6 +27,13 @@ Fast Fourier Transform in C
      & = \underbrace{\sum_{m=0}^{(N/2)-1}x_n\ e^{-\frac{i2\pi}{N/2}mk}}_{\normalsize{DFT\ of\ even-indexed\ part\ of\ x_n}} + e^{-\frac{i2\pi}{N}k}\underbrace{\sum_{m=0}^{(N/2)-1}x_n\ e^{-\frac{i2\pi}{N/2}mk}}_{\normalsize{DFT\ of\ odd-indexed\ part\ of\ x_n}} \\
      \\
  X_{k+\frac{N}{2}} & = \sum_{m=0}^{(N/2)-1}x_n\ e^{-\frac{i2\pi}{N/2}m(k+\frac{N}{2})} + e^{-\frac{i2\pi}{N}k}\sum_{m=0}^{(N/2)-1}x_n\ e^{-\frac{i2\pi}{N/2}m(k+\frac{N}{2})} \\
-     & = \underbrace{\sum_{m=0}^{(N/2)-1}x_n\ e^{-\frac{i2\pi}{N/2}mk}}_{\normalsize{DFT\ of\ even-indexed\ part\ of\ x_n}} - e^{-\frac{i2\pi}{N}k}\underbrace{\sum_{m=0}^{(N/2)-1}x_n\ e^{-\frac{i2\pi}{N/2}mk}}_{\normalsize{DFT\ of\ odd-indexed\ part\ of\ x_n}}
+     & = \underbrace{\sum_{m=0}^{(N/2)-1}x_n\ e^{-\frac{i2\pi}{N/2}mk}}_{\normalsize{DFT\ of\ even-indexed\ part\ of\ x_n}} - e^{-\frac{i2\pi}{N}k}\underbrace{\sum_{m=0}^{(N/2)-1}x_n\ e^{-\frac{i2\pi}{N/2}mk}}_{\normalsize{DFT\ of\ odd-indexed\ part\ of\ x_n}} \\
+\end{align} }$$
+>> 
+>> Summary, 
+>> 
+>> $$\Large{\begin{align}
+ X_k & = E\normalsize{venPart}\Large{_k + e^{-\frac{i2\pi}{N}k}O}\normalsize{ddPart}\Large{_k} \\
+ X_{k+\frac{N}{2}} & = E\normalsize{venPart}\Large{_k - e^{-\frac{i2\pi}{N}k}O}\normalsize{ddPart}\Large{_k}
 \end{align} }$$
 >> 
