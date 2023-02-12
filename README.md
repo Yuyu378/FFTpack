@@ -12,7 +12,7 @@ Fast Fourier Transform in C
 ## Algorithms Overview
 > ### One-dimensional Discrete Fourier Transform
 > #### Discrete Fourier Transform Algorithm - \$O(n^2)\$
-> $$\Large{ X_k = \sum_{n=0}^{N-1}x_n\ e^{-\frac{i2\pi}{N}nk} \qquad for\ k = 0, \cdots, N-1 }$$
+> $$\Large{ X_k = \sum_{n=0}^{N-1}x_n\ e^{-\frac{i2\pi}{N}nk} \qquad k = 0, \cdots, N-1 }$$
 
 > ### One-dimensional Fast Fourier Transform
 >> #### 8-points Decimate-in-time Algorithm - \$O(3n+5)\$
@@ -36,4 +36,23 @@ Fast Fourier Transform in C
  X_k & = E\normalsize{venPart}\Large{_k + e^{-\frac{i2\pi}{N}k}O}\normalsize{ddPart}\Large{_k} \\
  X_{k+\frac{N}{2}} & = E\normalsize{venPart}\Large{_k - e^{-\frac{i2\pi}{N}k}O}\normalsize{ddPart}\Large{_k}
 \end{align} }$$
+>
+>> #### Radar's Algorithm - \$O(3n\log{n})\$
+>> Rewrite Discrete Fourier Transform Algorithms
 >> 
+>> $$\Large{\begin{align}
+ X_0 & = \sum_{n=0}^{N-1}x_n \\ 
+ X_{g^{-p}} & = x_0 + \sum_{q=0}^{N-2}x_{g^q}\ e^{-\frac{i2\pi}{N}g^{-(p-q)}} \qquad p = 0, \cdots, N-2 
+\end{align} }$$
+>> 
+>> where n \$\in\$ { 1, 2, ..., N-1 } biject to q \$\in\$ { 0, 1, ..., N-2 }, k \$\in\$ { 1, 2, ..., N-1 } biject to p \$\in\$ { 0, 1, ..., N-2 }[^1].
+>> 
+>> $$\Large{ \sum_{q=0}^{N-2}x_{g^q}\ e^{-\frac{i2\pi}{N}}g^{-(p-q)} = x_{g^q\pmod{N}} \otimes e^{-\frac{i2\pi}{N}g^q\pmod{N}} }$$
+>> Assume
+>> 
+>> $$\Large{\begin{array}{c}
+ a = x_{g^q\pmod{N}} \\
+ b = e^{-\frac{i2\pi}{N}g^q\pmod{N}} 
+\end{array} \qquad q = 0, \cdots, N-2 }$$
+>> 
+>> [^1]: Properties of multiplicative group of integers modulo n.
