@@ -66,7 +66,7 @@ Fast Fourier Transform in C
 >>
 >> Completing the a-array and b-array to the smallest power of 2 greater than 2(N-1)-1[^2]:
 >>  - a - padding zeros between first (index = 0) and second (index = 1) elements.
->>  - b - Repeat itself.\
+>>  - b - Repeat itself.
 >> 
 >> $$ \Large{\begin{align}
  \hat{a} \ast \hat{b} & = \sum_{m=0}^{M-1}\hat{a}\[m\]\hat{b}\[n-m\] \\
@@ -95,7 +95,8 @@ Fast Fourier Transform in C
 \end{align}}$$
 >> 
 >> **Time Complexity :**\
->> Time complexity of inner DFT is \$N_1\log{N_2}\ ;\$ outer DFT is \$N_2\log{N_1}\$ \$\rightarrow\$ \$N_1\log{N_2}\times N_2\log{N_1} = N(\log{N_1} + \log{N_2})\$
+>> Time complexity of inner DFT is \$N_1\log{N_2}\ ;\$\
+>> outer DFT is \$N_2\log{N_1}\$ \$\rightarrow\$ \$N_1\log{N_2}\times N_2\log{N_1} = N(\log{N_1} + \log{N_2})\$
 
 [^1]: Properties of multiplicative group of integers modulo n.
 [^2]: Since convolution theorem, convolution result is same as circular convolution result when origin array length is padding to more than 2(N-1)
