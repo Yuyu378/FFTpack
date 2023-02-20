@@ -7,6 +7,7 @@
 //		----------------------------
 //		* Split the complex algorithms from mymath
 //      * Add polar coordinate system types and algorithms
+//      * Simple optimized self-defined complex algorithm
 // 
 
 #pragma once
