@@ -51,6 +51,14 @@ typedef _C_ldouble_polar _Lpolar;
 #define PI (3.1415926535897932384626433832795028841971693993751058209749445923)
 #endif
 
+//-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+//
+// Functions
+//
+//-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+
+/* self - defined complex function */
+
 void cprint(_Dcomplex a);
 
 void cswap(_Dcomplex* a, _Dcomplex* b);
@@ -65,6 +73,8 @@ _Dcomplex cdiv(_Dcomplex a, _Dcomplex b);
 
 // polar to complex
 _Dcomplex p2c(_Dpolar p);
+
+/* polar coordinate system function */
 
 _Dpolar _Pbuild(double _Radial, double _Angular);
 
