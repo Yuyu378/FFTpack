@@ -57,7 +57,7 @@ typedef _C_ldouble_polar _Lpolar;
 //
 //-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
-/* self - defined complex function */
+/* self-defined complex function */
 
 void cprint(_Dcomplex a);
 
