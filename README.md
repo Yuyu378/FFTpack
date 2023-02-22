@@ -29,11 +29,11 @@ Fast Fourier Transform in C
 > #### Radix-2 Cooley–Tukey Algorithm - \$\mathcal{O}(n\log{n})\$
 >> $$\Large{\begin{align}
  X_k & = \ \sum_{n\ even}^{N-1}\ \ x_n\ e^{-\frac{i2\pi}{N}nk} \quad + \ \sum_{n\ odd}^{N-1}x_n\ e^{-\frac{i2\pi}{N}nk} \\
-     & = \sum_{m=0}^{(N/2)-1}x_n\ e^{-\frac{i2\pi}{N}(2m)k} + \sum_{m=0}^{(N/2)-1}x_n\ e^{-\frac{i2\pi}{N}(2m+1)k} \\
-     & = \underbrace{\sum_{m=0}^{(N/2)-1}x_n\ e^{-\frac{i2\pi}{N/2}mk}}_{\normalsize{DFT\ of\ even-indexed\ part\ of\ x_n}} + e^{-\frac{i2\pi}{N}k}\underbrace{\sum_{m=0}^{(N/2)-1}x_n\ e^{-\frac{i2\pi}{N/2}mk}}_{\normalsize{DFT\ of\ odd-indexed\ part\ of\ x_n}} \\
+     & = \sum_{m=0}^{(N/2)-1}x_{2m}\ e^{-\frac{i2\pi}{N}(2m)k} + \sum_{m=0}^{(N/2)-1}x_{2m+1}\ e^{-\frac{i2\pi}{N}(2m+1)k} \\
+     & = \underbrace{\sum_{m=0}^{(N/2)-1}x_{2m}\ e^{-\frac{i2\pi}{N/2}mk}}_{\normalsize{DFT\ of\ even-indexed\ part\ of\ x_n}} + e^{-\frac{i2\pi}{N}k}\underbrace{\sum_{m=0}^{(N/2)-1}x_{2m+1}\ e^{-\frac{i2\pi}{N/2}mk}}_{\normalsize{DFT\ of\ odd-indexed\ part\ of\ x_n}} \\
      \\
- X_{k+\frac{N}{2}} & = \sum_{m=0}^{(N/2)-1}x_n\ e^{-\frac{i2\pi}{N/2}m(k+\frac{N}{2})} + e^{-\frac{i2\pi}{N}k}\sum_{m=0}^{(N/2)-1}x_n\ e^{-\frac{i2\pi}{N/2}m(k+\frac{N}{2})} \\
-     & = \underbrace{\sum_{m=0}^{(N/2)-1}x_n\ e^{-\frac{i2\pi}{N/2}mk}}_{\normalsize{DFT\ of\ even-indexed\ part\ of\ x_n}} - e^{-\frac{i2\pi}{N}k}\underbrace{\sum_{m=0}^{(N/2)-1}x_n\ e^{-\frac{i2\pi}{N/2}mk}}_{\normalsize{DFT\ of\ odd-indexed\ part\ of\ x_n}} \\
+ X_{k+\frac{N}{2}} & = \sum_{m=0}^{(N/2)-1}x_{2m}\ e^{-\frac{i2\pi}{N/2}m(k+\frac{N}{2})} + e^{-\frac{i2\pi}{N}k}\sum_{m=0}^{(N/2)-1}x_{2m+1}\ e^{-\frac{i2\pi}{N/2}m(k+\frac{N}{2})} \\
+     & = \underbrace{\sum_{m=0}^{(N/2)-1}x_{2m}\ e^{-\frac{i2\pi}{N/2}mk}}_{\normalsize{DFT\ of\ even-indexed\ part\ of\ x_n}} - e^{-\frac{i2\pi}{N}k}\underbrace{\sum_{m=0}^{(N/2)-1}x_{2m+1}\ e^{-\frac{i2\pi}{N/2}mk}}_{\normalsize{DFT\ of\ odd-indexed\ part\ of\ x_n}} \\
 \end{align} }$$
 >> 
 >> Summary, 
