@@ -26,7 +26,7 @@ Fast Fourier Transform in C
 >> **Time Complexity :**\
 >> Three layers of butterfly diagram, each layer with time complexity n \$\rightarrow\$ \$3\times n\$
 >
-> #### Radix-2 Cooley–Tukey Algorithm - \$\mathcal{O}(n\log{n})\$
+> #### Radix-2 Cooley–Tukey Algorithm (Carl Friedrich Gauss' Algorithm) - \$\mathcal{O}(n\log{n})\$
 >> $$\Large{\begin{align}
  X_k & = \ \sum_{n\ even}^{N-1}\ \ x_n\ e^{-\frac{i2\pi}{N}nk} \quad + \ \sum_{n\ odd}^{N-1}x_n\ e^{-\frac{i2\pi}{N}nk} \\
      & = \sum_{m=0}^{(N/2)-1}x_{2m}\ e^{-\frac{i2\pi}{N}(2m)k} + \sum_{m=0}^{(N/2)-1}x_{2m+1}\ e^{-\frac{i2\pi}{N}(2m+1)k} \\
@@ -79,7 +79,7 @@ Fast Fourier Transform in C
 >> **Time Complexity :**\
 >> Time complexity of DFT \$(\hat{a})\approx n\log{n}\$, and same as DFT \$(\hat{b})\$ and IDFT \$\rightarrow\$ \$3\times n\log{n}\$
 > 
-> #### Hybrid Radix Cooley–Tukey Algorithm - \$\mathcal{O}(n\log{n})\$
+> #### (Hybrid Radix) Cooley–Tukey Algorithm - \$\mathcal{O}(n\log{n})\$
 >> $$\Large{\underbrace{\begin{bmatrix}\ a_0, a_1, \cdots, a_{\normalsize N-1}\ \end{bmatrix}}_{\normalsize{N}} \Longrightarrow 
  \begin{bmatrix}
  a_{\normalsize 0,\ 0} & \cdots & a_{\normalsize 0,\ N2-1} \\
