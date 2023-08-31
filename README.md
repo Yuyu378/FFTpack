@@ -12,14 +12,14 @@ Fast Fourier Transform in C
 ## Algorithms Overview
 ### One-dimensional Discrete Fourier Transform
 > #### Discrete Fourier Transform Algorithm - \$\mathcal{O}(n^2)\$
-> $$\Large{ X_k = \sum_{n=0}^{N-1}x_n\ e^{-\frac{i2\pi}{N}nk} \qquad k = 0, \cdots, N-1 }$$
+> $$ X_k = \sum_{n=0}^{N-1}x_n\ e^{-\frac{i2\pi}{N}nk} \qquad k = 0, \cdots, N-1 $$
 > 
 > **Time Complexity :**\
 > n summation to get a frequency sample, a total of n frequency sample \$\rightarrow\$ \$n\times n\$
 
 ### One-dimensional Fast Fourier Transform
 > #### 8-points Decimate-in-time Algorithm - \$\mathcal{O}(n)\$
->> $$\Large{ W_N^0 = e^{-\frac{i2\pi}{N}0} = 1 }$$
+>> $$ W_N^0 = e^{-\frac{i2\pi}{N}0} = 1 $$
 >>
 >> <picture>
 >>   <source media="(prefers-color-scheme: dark)" srcset="img/8-points Decimate-in-time Algorithm_black.jpg">
@@ -32,8 +32,7 @@ Fast Fourier Transform in C
 >
 > #### Radix-2 Cooley–Tukey Algorithm (Carl Friedrich Gauss' Algorithm) - \$\mathcal{O}(n\log{n})\$
 >> $$
->> \Large{
->>   \begin{aligned}
+>> \begin{aligned}
 >>   X_k
 >>     &= \sum_{n\ even}^{N-1}\ \ x_n\ e^{-\frac{i2\pi}{N}nk} \qquad + \ \sum_{n\ odd}^{N-1}x_n\ e^{-\frac{i2\pi}{N}nk} \\
 >>     &= \sum_{m=0}^{(N/2)-1}x_{2m}\ e^{-\frac{i2\pi}{N}(2m)k} \ + \sum_{m=0}^{(N/2)-1}x_{2m+1}\ e^{-\frac{i2\pi}{N}(2m+1)k} \\
@@ -41,21 +40,18 @@ Fast Fourier Transform in C
 >>   X_{k+\frac{N}{2}} 
 >>     &= \sum_{m=0}^{(N/2)-1}x_{2m}\ e^{-\frac{i2\pi}{N/2}m(k+\frac{N}{2})}\ + e^{-\frac{i2\pi}{N}k}\sum_{m=0}^{(N/2)-1}x_{2m+1}\ e^{-\frac{i2\pi}{N/2}m(k+\frac{N}{2})} \\
 >>     &= \sum_{m=0}^{(N/2)-1}x_{2m}\ e^{-\frac{i2\pi}{N/2}mk} \qquad\ - e^{-\frac{i2\pi}{N}k} \sum_{m=0}^{(N/2)-1}x_{2m+1}\ e^{-\frac{i2\pi}{N/2}mk} \\
->>   \end{aligned}
->> }
+>> \end{aligned}
 >> $$
 >> 
 >> Summary, 
 >>
 >> $$
->> \Large{
->>   \begin{aligned}
+>> \begin{aligned}
 >>   X_k
 >>     &= EvenPart_k + e^{-\frac{i2\pi}{N}k}OddPart_k \\
 >>   X_{k+\frac{N}{2}}
 >>     &= EvenPart_k - e^{-\frac{i2\pi}{N}k}OddPart_k
->>   \end{aligned}
->> }
+>> \end{aligned}
 >> $$
 >> 
 >> **Time Complexity :**\
@@ -64,20 +60,24 @@ Fast Fourier Transform in C
 > #### Radar's Algorithm - \$\mathcal{O}(n\log{n})\$
 >> Rewrite Discrete Fourier Transform Algorithms
 >> 
->> $$\Large{\begin{align}
- X_0 & = \sum_{n=0}^{N-1}x_n \\ 
- X_{g^{-p}} & = x_0 + \sum_{q=0}^{N-2}x_{g^q}\ e^{-\frac{i2\pi}{N}g^{-(p-q)}} \qquad p = 0, \cdots, N-2 
-\end{align}}$$
+>> $$
+>> \begin{align}
+>>   X_0 & = \sum_{n=0}^{N-1}x_n \\ 
+>>   X_{g^{-p}} & = x_0 + \sum_{q=0}^{N-2}x_{g^q}\ e^{-\frac{i2\pi}{N}g^{-(p-q)}} \qquad p = 0, \cdots, N-2 
+>> \end{align}
+>> $$
 >> 
 >> where n \$\in\$ { 1, 2, ..., N-1 } biject to q \$\in\$ { 0, 1, ..., N-2 }, k \$\in\$ { 1, 2, ..., N-1 } biject to p \$\in\$ { 0, 1, ..., N-2 }[^1].
 >> 
->> $$\Large{ \sum_{q=0}^{N-2}x_{g^q}\ e^{-\frac{i2\pi}{N}}g^{-(p-q)} = x_{g^q\pmod{N}} \otimes e^{-\frac{i2\pi}{N}g^q\pmod{N}} }$$
+>> $$ \sum_{q=0}^{N-2}x_{g^q}\ e^{-\frac{i2\pi}{N}}g^{-(p-q)} = x_{g^q\pmod{N}} \otimes e^{-\frac{i2\pi}{N}g^q\pmod{N}} $$
 >> Assume
 >> 
->> $$\Large{\begin{array}{c}
- a = x_{g^q\pmod{N}} \quad\ \ \\
- b = e^{-\frac{i2\pi}{N}g^q\pmod{N}} 
-\end{array} \qquad q = 0, \cdots, N-2 }$$
+>> $$
+>> \begin{array}{c}
+>>   a = x_{g^q\pmod{N}} \quad\ \ \\
+>>   b = e^{-\frac{i2\pi}{N}g^q\pmod{N}} 
+>> \end{array} \qquad q = 0, \cdots, N-2
+>> $$
 >>
 >> Completing the a-array and b-array to the smallest power of 2 greater than 2(N-1)-1[^2]:
 >>  - a - padding zeros between first (index = 0) and second (index = 1) elements.
@@ -104,10 +104,13 @@ Fast Fourier Transform in C
 >>
 >> Rewrite Discrete Fourier Transform Algorithms
 >> 
->> $$\Large{\begin{align}
- X_{N_2k_1+k_2} & = \sum_{n_1=0}^{N_1-1}\sum_{n_2=0}^{N_2-1}x_{N_1n_2+n_1}\ e^{-\frac{i2\pi}{N_1N_2}(N_1n_2+n_1)(N_2k_1+k_2)} \\ 
-                & = \underbrace{\sum_{n_1=0}^{N_1-1} (\ (\overbrace{e^{-\frac{i2\pi}{N_1N_2}n_1k_2}}^{\normalsize{Twiddle\ Factor}}) (\overbrace{\sum_{n_2=0}^{N_2-1}x_{N_1n_2+n_1}\ e^{-\frac{i2\pi}{N_2}n_2k_2}}^{\normalsize{Do\ N1\ times\ of\ DFT\ transformations\ with\ N2\ length}})\ )e^{-\frac{i2\pi}{N_1}n_1k_1}}_{\normalsize{Do\ N2\ times\ of\ DFT\ transformations\ with\ N1\ length}}
-\end{align}}$$
+>> $$
+>> \begin{align}
+>>   X_{N_2k_1+k_2}
+>>     &= \sum_{n_1=0}^{N_1-1}\sum_{n_2=0}^{N_2-1}x_{N_1n_2+n_1}\ e^{-\frac{i2\pi}{N_1N_2}(N_1n_2+n_1)(N_2k_1+k_2)} \\ 
+>>     &= \underbrace{\sum_{n_1=0}^{N_1-1} (\ (\overbrace{e^{-\frac{i2\pi}{N_1N_2}n_1k_2}}^{\normalsize{Twiddle\ Factor}}) (\overbrace{\sum_{n_2=0}^{N_2-1}x_{N_1n_2+n_1}\ e^{-\frac{i2\pi}{N_2}n_2k_2}}^{\normalsize{Do\ N1\ times\ of\ DFT\ transformations\ with\ N2\ length}})\ )e^{-\frac{i2\pi}{N_1}n_1k_1}}_{\normalsize{Do\ N2\ times\ of\ DFT\ transformations\ with\ N1\ length}}
+>> \end{align}
+>> $$
 >> 
 >> **Time Complexity :**\
 >> Time complexity of inner DFT is \$N_1\log{N_2}\ ;\$\
