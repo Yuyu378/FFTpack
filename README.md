@@ -18,10 +18,10 @@ Fast Fourier Transform in C
 > n summation to get a frequency sample, a total of n frequency sample \$\rightarrow\$ \$n\times n\$
 
 ### One-dimensional Fast Fourier Transform
-> #### 8-points Decimate-in-time Algorithm - \$\mathcal{O}(3n)\$
->> $$\Large{ W_n^0 = e^{-\frac{i2\pi}{N}0} = 1 }$$
+> #### 8-points Decimate-in-time Algorithm - \$\mathcal{O}(n)\$
+>> $$\Large{ W_N^0 = e^{-\frac{i2\pi}{N}0} = 1 }$$
 >> 
->> ![8-points DIT](https://th.bing.com/th/id/R.dcef1a65d97e82adf10929a2e4eabfaf?rik=yrxhCGyT%2bGcuRA&riu=http%3a%2f%2fimg.blog.csdn.net%2f20170901201507165%3fwatermark%2f2%2ftext%2faHR0cDovL2Jsb2cuY3Nkbi5uZXQvZXpfeXd3%2ffont%2f5a6L5L2T%2ffontsize%2f400%2ffill%2fI0JBQkFCMA%3d%3d%2fdissolve%2f70%2fgravity%2fSouthEast&ehk=80flaSpbvyMnzt72FK6Ch6h6VNdG2MtpjumtaZQ36qE%3d&risl=&pid=ImgRaw&r=0)
+>> ![8-points DIT](https://github.com/Yuyu378/FFT-msvc/blob/main/8-points%20Decimate-in-time%20Algorithm.jpg)
 >> 
 >> **Time Complexity :**\
 >> Three layers of butterfly diagram, each layer with time complexity n \$\rightarrow\$ \$3\times n\$
@@ -46,7 +46,7 @@ Fast Fourier Transform in C
 >> **Time Complexity :**\
 >> \$\log{n}\$ layers of butterfly diagram, each layer with time complexity n \$\rightarrow\$ \$(\log{n})\times n\$
 >
-> #### Radar's Algorithm - \$\mathcal{O}(3n\log{n})\$
+> #### Radar's Algorithm - \$\mathcal{O}(n\log{n})\$
 >> Rewrite Discrete Fourier Transform Algorithms
 >> 
 >> $$\Large{\begin{align}
