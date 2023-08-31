@@ -22,9 +22,9 @@ Fast Fourier Transform in C
 >> $$ W_N^0 = e^{-\frac{i2\pi}{N}0} = 1 $$
 >>
 >> <picture>
->>   <source media="(prefers-color-scheme: dark)" srcset="img/8-points Decimate-in-time Algorithm_black.png">
->>   <source media="(prefers-color-scheme: light)" srcset="img/8-points Decimate-in-time Algorithm.png">
->>   <img alt="Figure 1" src="img/8-points Decimate-in-time Algorithm.png">
+>>   <source media="(prefers-color-scheme: dark)" srcset="https://github.com/Yuyu378/FFT-msvc/blob/main/img/8-points%20Decimate-in-time%20Algorithm.jpg">
+>>   <source media="(prefers-color-scheme: light)" srcset="https://github.com/Yuyu378/FFT-msvc/blob/main/img/8-points%20Decimate-in-time%20Algorithm_black.jpg">
+>>   <img alt="Figure 1" src="[img/8-points Decimate-in-time Algorithm.png](https://github.com/Yuyu378/FFT-msvc/blob/main/img/8-points%20Decimate-in-time%20Algorithm_black.jpg)">
 >> </picture>
 >> 
 >> **Time Complexity :**\
