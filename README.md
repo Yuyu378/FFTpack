@@ -20,28 +20,43 @@ Fast Fourier Transform in C
 ### One-dimensional Fast Fourier Transform
 > #### 8-points Decimate-in-time Algorithm - \$\mathcal{O}(n)\$
 >> $$\Large{ W_N^0 = e^{-\frac{i2\pi}{N}0} = 1 }$$
->> 
->> ![8-points DIT](https://github.com/Yuyu378/FFT-msvc/blob/main/8-points%20Decimate-in-time%20Algorithm.jpg)
+>>
+>> <picture>
+>>   <source media="(prefers-color-scheme: dark)" srcset="img/8-points Decimate-in-time Algorithm_black.jpg">
+>>   <source media="(prefers-color-scheme: light)" srcset="img/8-points Decimate-in-time Algorithm.jpg">
+>>   <img alt="Figure 1" src="img/8-points Decimate-in-time Algorithm.jpg">
+>> </picture>
 >> 
 >> **Time Complexity :**\
 >> Three layers of butterfly diagram, each layer with time complexity n \$\rightarrow\$ \$3\times n\$
 >
 > #### Radix-2 Cooley–Tukey Algorithm (Carl Friedrich Gauss' Algorithm) - \$\mathcal{O}(n\log{n})\$
->> $$\Large{\begin{align}
- X_k & = \ \sum_{n\ even}^{N-1}\ \ x_n\ e^{-\frac{i2\pi}{N}nk} \quad + \ \sum_{n\ odd}^{N-1}x_n\ e^{-\frac{i2\pi}{N}nk} \\
-     & = \sum_{m=0}^{(N/2)-1}x_{2m}\ e^{-\frac{i2\pi}{N}(2m)k} + \sum_{m=0}^{(N/2)-1}x_{2m+1}\ e^{-\frac{i2\pi}{N}(2m+1)k} \\
-     & = \underbrace{\sum_{m=0}^{(N/2)-1}x_{2m}\ e^{-\frac{i2\pi}{N/2}mk}}_{\normalsize{DFT\ of\ even-indexed\ part\ of\ x_n}} + e^{-\frac{i2\pi}{N}k}\underbrace{\sum_{m=0}^{(N/2)-1}x_{2m+1}\ e^{-\frac{i2\pi}{N/2}mk}}_{\normalsize{DFT\ of\ odd-indexed\ part\ of\ x_n}} \\
-     \\
- X_{k+\frac{N}{2}} & = \sum_{m=0}^{(N/2)-1}x_{2m}\ e^{-\frac{i2\pi}{N/2}m(k+\frac{N}{2})} + e^{-\frac{i2\pi}{N}k}\sum_{m=0}^{(N/2)-1}x_{2m+1}\ e^{-\frac{i2\pi}{N/2}m(k+\frac{N}{2})} \\
-     & = \underbrace{\sum_{m=0}^{(N/2)-1}x_{2m}\ e^{-\frac{i2\pi}{N/2}mk}}_{\normalsize{DFT\ of\ even-indexed\ part\ of\ x_n}} - e^{-\frac{i2\pi}{N}k}\underbrace{\sum_{m=0}^{(N/2)-1}x_{2m+1}\ e^{-\frac{i2\pi}{N/2}mk}}_{\normalsize{DFT\ of\ odd-indexed\ part\ of\ x_n}} \\
-\end{align} }$$
+>> $$
+>> \Large{
+>>   \begin{aligned}
+>>   X_k
+>>     &= \sum_{n\ even}^{N-1}\ \ x_n\ e^{-\frac{i2\pi}{N}nk} \qquad + \ \sum_{n\ odd}^{N-1}x_n\ e^{-\frac{i2\pi}{N}nk} \\
+>>     &= \sum_{m=0}^{(N/2)-1}x_{2m}\ e^{-\frac{i2\pi}{N}(2m)k} \ + \sum_{m=0}^{(N/2)-1}x_{2m+1}\ e^{-\frac{i2\pi}{N}(2m+1)k} \\
+>>     &= \sum_{m=0}^{(N/2)-1}x_{2m}\ e^{-\frac{i2\pi}{N/2}mk} \quad + e^{-\frac{i2\pi}{N}k}\sum_{m=0}^{(N/2)-1}x_{2m}\ e^{-\frac{i2\pi}{N/2}mk} \\
+>>   X_{k+\frac{N}{2}} 
+>>     &= \sum_{m=0}^{(N/2)-1}x_{2m}\ e^{-\frac{i2\pi}{N/2}m(k+\frac{N}{2})}\ + e^{-\frac{i2\pi}{N}k}\sum_{m=0}^{(N/2)-1}x_{2m+1}\ e^{-\frac{i2\pi}{N/2}m(k+\frac{N}{2})} \\
+>>     &= \sum_{m=0}^{(N/2)-1}x_{2m}\ e^{-\frac{i2\pi}{N/2}mk} \qquad\ - e^{-\frac{i2\pi}{N}k} \sum_{m=0}^{(N/2)-1}x_{2m+1}\ e^{-\frac{i2\pi}{N/2}mk} \\
+>>   \end{aligned}
+>> }
+>> $$
 >> 
 >> Summary, 
->> 
->> $$\Large{\begin{align}
- X_k & = E\normalsize{venPart}\Large{_k + e^{-\frac{i2\pi}{N}k}O}\normalsize{ddPart}\Large{_k} \\
- X_{k+\frac{N}{2}} & = E\normalsize{venPart}\Large{_k - e^{-\frac{i2\pi}{N}k}O}\normalsize{ddPart}\Large{_k}
-\end{align} }$$
+>>
+>> $$
+>> \Large{
+>>   \begin{aligned}
+>>   X_k
+>>     &= EvenPart_k + e^{-\frac{i2\pi}{N}k}OddPart_k \\
+>>   X_{k+\frac{N}{2}}
+>>     &= EvenPart_k - e^{-\frac{i2\pi}{N}k}OddPart_k
+>>   \end{aligned}
+>> }
+>> $$
 >> 
 >> **Time Complexity :**\
 >> \$\log{n}\$ layers of butterfly diagram, each layer with time complexity n \$\rightarrow\$ \$(\log{n})\times n\$
