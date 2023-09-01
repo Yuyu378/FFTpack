@@ -34,12 +34,15 @@ Fast Fourier Transform in C
 >> $$
 >> \begin{aligned}
 >>   X_k
->>     &= \sum_{n\ even}^{N-1}\ \ x_n\ e^{-\frac{i2\pi}{N}nk} \qquad + \ \sum_{n\ odd}^{N-1}x_n\ e^{-\frac{i2\pi}{N}nk} \\
->>     &= \sum_{m=0}^{(N/2)-1}x_{2m}\ e^{-\frac{i2\pi}{N}(2m)k} \ + \sum_{m=0}^{(N/2)-1}x_{2m+1}\ e^{-\frac{i2\pi}{N}(2m+1)k} \\
->>     &= \sum_{m=0}^{(N/2)-1}x_{2m}\ e^{-\frac{i2\pi}{N/2}mk} \quad + e^{-\frac{i2\pi}{N}k}\sum_{m=0}^{(N/2)-1}x_{2m}\ e^{-\frac{i2\pi}{N/2}mk} \\
+>>     &= \quad\ \sum_{n\ even}^{N-1}\ \ x_n\ e^{-\frac{i2\pi}{N}nk} \qquad + \ \sum_{n\ odd}^{N-1}x_n\ e^{-\frac{i2\pi}{N}nk} \\
+>>     &= \ \ \ \sum_{m=0}^{(N/2)-1}x_{2m}\ e^{-\frac{i2\pi}{N}(2m)k} \ \ \ + \sum_{m=0}^{(N/2)-1}x_{2m+1}\ e^{-\frac{i2\pi}{N}(2m+1)k} \\
+>>     &= \underbrace{\sum_{m=0}^{(N/2)-1}x_{2m}\ e^{-\frac{i2\pi}{N/2}mk}}_ {\normalsize{DFT\ of\ even-indexed\ part\ of\ x_n}}
+>>        + e^{-\frac{i2\pi}{N}k}\underbrace{ \sum_{m=0}^{(N/2)-1}x_{2m}\ e^{-\frac{i2\pi}{N/2}mk} }_ {\normalsize{DFT\ of\ odd-indexed\ part\ of\ x_n}} \\
+>>   \\
 >>   X_{k+\frac{N}{2}} 
->>     &= \sum_{m=0}^{(N/2)-1}x_{2m}\ e^{-\frac{i2\pi}{N/2}m(k+\frac{N}{2})}\ + e^{-\frac{i2\pi}{N}k}\sum_{m=0}^{(N/2)-1}x_{2m+1}\ e^{-\frac{i2\pi}{N/2}m(k+\frac{N}{2})} \\
->>     &= \sum_{m=0}^{(N/2)-1}x_{2m}\ e^{-\frac{i2\pi}{N/2}mk} \qquad\ - e^{-\frac{i2\pi}{N}k} \sum_{m=0}^{(N/2)-1}x_{2m+1}\ e^{-\frac{i2\pi}{N/2}mk} \\
+>>     &= \sum_{m=0}^{(N/2)-1}x_{2m}\ e^{-\frac{i2\pi}{N/2}m(k+\frac{N}{2})}\ \ +\ e^{-\frac{i2\pi}{N}k}\sum_{m=0}^{(N/2)-1}x_{2m+1}\ e^{-\frac{i2\pi}{N/2}m(k+\frac{N}{2})} \\
+>>     &= \underbrace{\sum_{m=0}^{(N/2)-1}x_{2m}\ e^{-\frac{i2\pi}{N/2}mk}}_ {\normalsize{DFT\ of\ even-indexed\ part\ of\ x_n}}
+>>        -\ e^{-\frac{i2\pi}{N}k}\underbrace{ \sum_{m=0}^{(N/2)-1}x_{2m+1}\ e^{-\frac{i2\pi}{N/2}mk} }_ {\normalsize{DFT\ of\ odd-indexed\ part\ of\ x_n}}\\
 >> \end{aligned}
 >> $$
 >> 
@@ -88,10 +91,10 @@ Fast Fourier Transform in C
 >> \begin{align}
 >>   \hat{a} \ast \hat{b}
 >>     & = \sum_{m=0}^{M-1}\hat{a}\[m\]\hat{b}\[n-m\] \\
->>     & = a\[0\]\hat{b}\[n\] + \underbrace{0\cdot \hat{b}\[n-1\] + \cdots + 0\cdot \hat{b}\[n-M+N-1\]}_{\normalsize{M-N+1}} \\
->>     & \qquad\qquad + \underbrace{a\[1\]\hat{b}\[n-M+N-2\] + \cdots + a\[N-2\]\hat{b}\[n-M+1\]}_{\normalsize{N-2}} \\
->>     & = a\[0\]b\[n\] + a\[1\]b\[n-(M-N+2)_{mod\ N}\] + \cdots + a\[N-2\]b\[n-(M-1)_{mod\ N}\] \\
->>     & = \hat{a} \otimes \hat{b} = IDFT(\ DFT(\hat{a})\cdot DFT(\hat{b})\ )
+>>     & = a\[0\]\hat{b}\[n\] + \underbrace{ 0\cdot \hat{b}\[n-1\] + \cdots + 0\cdot \hat{b}\[n-M+N-1\]}_ {\normalsize{M-N+1}} \\
+>>     & \qquad\qquad\ \ \ + \underbrace{ a\[1\]\hat{b}\[n-M+N-2\] + \cdots + a\[N-2\]\hat{b}\[n-M+1\] }_ {\normalsize{N-2}} \\
+>>     & = a\[0\]b\[n\] + a\[1\]b\[n-(M-N+2)_ {mod\ N}\] + \cdots + a\[N-2\]b\[n-(M-1)_ {mod\ N}\] \\
+>>     & = \hat{a} \otimes \hat{b} = \text{IDFT}(\text{DFT}(\hat{a})\cdot\text{DFT}(\hat{b})\ )
 >> \end{align}
 >> $$
 >>
@@ -119,13 +122,13 @@ Fast Fourier Transform in C
 >> \begin{align}
 >>   X_{N_2k_1+k_2}
 >>     &= \sum_{n_1=0}^{N_1-1}\sum_{n_2=0}^{N_2-1}x_{N_1n_2+n_1}\ e^{-\frac{i2\pi}{N_1N_2}(N_1n_2+n_1)(N_2k_1+k_2)} \\ 
->>     &= \underbrace{\sum_{n_1=0}^{N_1-1} (\ (\overbrace{e^{-\frac{i2\pi}{N_1N_2}n_1k_2}}^{\normalsize{Twiddle\ Factor}}) (\overbrace{\sum_{n_2=0}^{N_2-1}x_{N_1n_2+n_1}\ e^{-\frac{i2\pi}{N_2}n_2k_2}}^{\normalsize{Do\ N1\ times\ of\ DFT\ transformations\ with\ N2\ length}})\ )e^{-\frac{i2\pi}{N_1}n_1k_1}}_{\normalsize{Do\ N2\ times\ of\ DFT\ transformations\ with\ N1\ length}}
+>>     &= \underbrace{\sum_{n_1=0}^{N_1-1} (\ (\overbrace{e^{-\frac{i2\pi}{N_1N_2}n_1k_2}}^{\normalsize{Twiddle\ Factor}}) (\overbrace{\sum_{n_2=0}^{N_2-1}x_{N_1n_2+n_1}\ e^{-\frac{i2\pi}{N_2}n_2k_2}}^{\normalsize{Do\ N_1\ times\ of\ DFT\ transformations\ with\ N2\ length}})\ )e^{-\frac{i2\pi}{N_1}n_1k_1}}_{\normalsize{Do\ N_2\ times\ of\ DFT\ transformations\ with\ N1\ length}}
 >> \end{align}
 >> $$
 >> 
 >> **Time Complexity :**\
 >> Time complexity of inner DFT is \$N_1\log{N_2}\ ;\$\
->> outer DFT is \$N_2\log{N_1}\$ \$\rightarrow\$ \$N_1\log{N_2}\times N_2\log{N_1} = N(\log{N_1} + \log{N_2})\$
+>> outer DFT is \$N_2\log{N_1}\$ \$\rightarrow\$ \$N_1\log{N_2}\times N_2\log{N_1} = N(\log{N_1} + \log{N_2})\$ where \$N = N_1N_2\$
 
 [^1]: Properties of multiplicative group of integers modulo n.
 [^2]: Since convolution theorem, convolution result is same as circular convolution result when origin array length is padding to more than 2(N-1)
