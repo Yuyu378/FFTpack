@@ -1,5 +1,6 @@
 # FFTpack
-Fast Fourier Transform in C
+Fast Fourier Transform in C  
+Using [ComplexLib](https://github.com/Yuyu378/complexlib) for complex arithmetic operation
 
 ## Implemented Algorithms
 * One-dimensional Discrete Fourier Transform
@@ -70,7 +71,8 @@ Fast Fourier Transform in C
 >> \end{align}
 >> $$
 >> 
->> where n \$\in\$ { 1, 2, ..., N-1 } biject to q \$\in\$ { 0, 1, ..., N-2 }, k \$\in\$ { 1, 2, ..., N-1 } biject to p \$\in\$ { 0, 1, ..., N-2 }[^1].
+>> where n \$\in\$ { 1, 2, ..., N-1 } biject to q \$\in\$ { 0, 1, ..., N-2 },  
+>> k \$\in\$ { 1, 2, ..., N-1 } biject to p \$\in\$ { 0, 1, ..., N-2 }[^1].
 >> 
 >> $$ \sum_{q=0}^{N-2}x_{g^q}\ e^{-\frac{i2\pi}{N}}g^{-(p-q)} = x_{g^q\pmod{N}} \otimes e^{-\frac{i2\pi}{N}g^q\pmod{N}} $$
 >> 
