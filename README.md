@@ -1,4 +1,4 @@
-# FFT-msvc
+# FFTpack
 Fast Fourier Transform in C
 
 ## Implemented Algorithms
@@ -70,6 +70,7 @@ Fast Fourier Transform in C
 >> where n \$\in\$ { 1, 2, ..., N-1 } biject to q \$\in\$ { 0, 1, ..., N-2 }, k \$\in\$ { 1, 2, ..., N-1 } biject to p \$\in\$ { 0, 1, ..., N-2 }[^1].
 >> 
 >> $$ \sum_{q=0}^{N-2}x_{g^q}\ e^{-\frac{i2\pi}{N}}g^{-(p-q)} = x_{g^q\pmod{N}} \otimes e^{-\frac{i2\pi}{N}g^q\pmod{N}} $$
+>> 
 >> Assume
 >> 
 >> $$
@@ -83,24 +84,34 @@ Fast Fourier Transform in C
 >>  - a - padding zeros between first (index = 0) and second (index = 1) elements.
 >>  - b - Repeat itself.
 >> 
->> $$ \Large{\begin{align}
- \hat{a} \ast \hat{b} & = \sum_{m=0}^{M-1}\hat{a}\[m\]\hat{b}\[n-m\] \\
- & = a\[0\]\hat{b}\[n\] + \underbrace{0\cdot \hat{b}\[n-1\] + \cdots + 0\cdot \hat{b}\[n-M+N-1\]}_{\normalsize{M-N+1}} \\
- & \qquad\qquad + \underbrace{a\[1\]\hat{b}\[n-M+N-2\] + \cdots + a\[N-2\]\hat{b}\[n-M+1\]}_{\normalsize{N-2}} \\
- & = a\[0\]b\[n\] + a\[1\]b\[n-(M-N+2)_{mod\ N}\] + \cdots + a\[N-2\]b\[n-(M-1)_{mod\ N}\] \\
- & = \hat{a} \otimes \hat{b} = IDFT(\ DFT(\hat{a})\cdot DFT(\hat{b})\ )
- \end{align} }$$
+>> $$
+>> \begin{align}
+>>   \hat{a} \ast \hat{b}
+>>     & = \sum_{m=0}^{M-1}\hat{a}\[m\]\hat{b}\[n-m\] \\
+>>     & = a\[0\]\hat{b}\[n\] + \underbrace{0\cdot \hat{b}\[n-1\] + \cdots + 0\cdot \hat{b}\[n-M+N-1\]}_{\normalsize{M-N+1}} \\
+>>     & \qquad\qquad + \underbrace{a\[1\]\hat{b}\[n-M+N-2\] + \cdots + a\[N-2\]\hat{b}\[n-M+1\]}_{\normalsize{N-2}} \\
+>>     & = a\[0\]b\[n\] + a\[1\]b\[n-(M-N+2)_{mod\ N}\] + \cdots + a\[N-2\]b\[n-(M-1)_{mod\ N}\] \\
+>>     & = \hat{a} \otimes \hat{b} = IDFT(\ DFT(\hat{a})\cdot DFT(\hat{b})\ )
+>> \end{align}
+>> $$
 >>
 >> **Time Complexity :**\
 >> Time complexity of DFT \$(\hat{a})\approx n\log{n}\$, and same as DFT \$(\hat{b})\$ and IDFT \$\rightarrow\$ \$3\times n\log{n}\$
 > 
 > #### (Hybrid Radix) Cooley–Tukey Algorithm - \$\mathcal{O}(n\log{n})\$
->> $$\Large{\underbrace{\begin{bmatrix}\ a_0, a_1, \cdots, a_{\normalsize N-1}\ \end{bmatrix}}_{\normalsize{N}} \Longrightarrow 
- \begin{bmatrix}
- a_{\normalsize 0,\ 0} & \cdots & a_{\normalsize 0,\ N2-1} \\
- \vdots   & \ddots & \vdots   \\
- a_{\normalsize N1-1,\ 0}& \cdots & a_{\normalsize N1-1,\ N2-1}
- \end{bmatrix}_{N1\times N2}}$$
+>>
+>> $$
+>> \underbrace{
+>>   \begin{bmatrix}
+>>     \ a_0, a_1, \cdots, a_{\normalsize N-1}\
+>>   \end{bmatrix}
+>> }_{\normalsize{N}} \Longrightarrow
+>> \begin{bmatrix}
+>>    a _{\normalsize{0,0}}       & \cdots & a _{\normalsize{0,\ N_2-1}}     \\
+>>    \vdots                      & \ddots & \vdots                          \\
+>>    a _{\normalsize{N_1-1,\ 0}} & \cdots & a _{\normalsize{N_1-1,\ N_2-1}}
+>> \end{bmatrix} _{N_1\times{N_2}}
+>> $$
 >>
 >> Rewrite Discrete Fourier Transform Algorithms
 >> 
