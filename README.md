@@ -67,21 +67,21 @@ Using [ComplexLib](https://github.com/Yuyu378/complexlib) for complex arithmetic
 >> $$
 >> \begin{align}
 >>   X_0 & = \sum_{n=0}^{N-1}x_n \\ 
->>   X_{g^{-p}} & = x_0 + \sum_{q=0}^{N-2}x_{g^q}\ e^{-\frac{i2\pi}{N}g^{-(p-q)}} \qquad p = 0, \cdots, N-2 
+>>   X_{g^{-p}} & = x_0 + \sum_{q=0}^{N-2}x_{g^{\ q}}\ e^{-\frac{i2\pi}{N}g^{-(p-q)}} \qquad p = 0, \cdots, N-2 
 >> \end{align}
 >> $$
 >> 
 >> where n \$\in\$ { 1, 2, ..., N-1 } biject to q \$\in\$ { 0, 1, ..., N-2 },  
 >> k \$\in\$ { 1, 2, ..., N-1 } biject to p \$\in\$ { 0, 1, ..., N-2 }[^1].
 >> 
->> $$ \sum_{q=0}^{N-2}x_{g^q}\ e^{-\frac{i2\pi}{N}}g^{-(p-q)} = x_{g^q\pmod{N}} \otimes e^{-\frac{i2\pi}{N}g^q\pmod{N}} $$
+>> $$ \sum_{q=0}^{N-2}x_{g^{\ q}}\ e^{-\frac{i2\pi}{N}}g^{-(p-q)} = x_{g^{\ q}\pmod{N}} \otimes e^{-\frac{i2\pi}{N}g^{\ q}\pmod{N}} $$
 >> 
 >> Assume
 >> 
 >> $$
 >> \begin{array}{c}
->>   a = x_{g^q\pmod{N}} \quad\ \ \\
->>   b = e^{-\frac{i2\pi}{N}g^q\pmod{N}} 
+>>   a = x_{g^{\ q}\pmod{N}} \quad\ \ \\
+>>   b = e^{-\frac{i2\pi}{N}g^{\ q}\pmod{N}} 
 >> \end{array} \qquad q = 0, \cdots, N-2
 >> $$
 >>
