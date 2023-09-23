@@ -7,7 +7,7 @@ Using [ComplexLib](https://github.com/Yuyu378/complexlib) for complex arithmetic
 * One-dimensional Fast Fourier Transform
   * 8-points Decimation-in-time Algorithm
   * Radix-2 Cooley–Tukey Algorithm
-  * Radar's Algorithm
+  * Rader's Algorithm
   * Hybrid Radix Cooley–Tukey Algorithm
 
 ## Algorithms Overview
@@ -61,7 +61,7 @@ Using [ComplexLib](https://github.com/Yuyu378/complexlib) for complex arithmetic
 >> **Time Complexity :**\
 >> \$\log{n}\$ layers of butterfly diagram, each layer with time complexity n \$\rightarrow\$ \$(\log{n})\times n\$
 >
-> #### Radar's Algorithm - \$\mathcal{O}(n\log{n})\$
+> #### Rader's Algorithm - \$\mathcal{O}(n\log{n})\$
 >> Rewrite Discrete Fourier Transform Algorithms
 >> 
 >> $$
