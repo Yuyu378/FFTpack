@@ -177,7 +177,7 @@ dcomplex* CooleyTukey_Radix2_nonRecursion(dcomplex* data, unsigned N, bool is_fo
 	return result;
 }
 
-dcomplex* Radar(dcomplex* data, unsigned N, bool is_forward, bool keep_input, dcomplex* (*fft)()) {
+dcomplex* Rader(dcomplex* data, unsigned N, bool is_forward, bool keep_input, dcomplex* (*fft)()) {
 
 	if (N == 1) return data;
 
@@ -259,7 +259,7 @@ dcomplex* CooleyTukey_HybridRadix(dcomplex* data, unsigned N, bool is_forward, b
 
 	if (N == 1) return data;
 	if (N == 2) return fft(data, N, is_forward, false);
-	if (isprime(N)) return Radar(data, N, is_forward, false, fft);
+	if (isprime(N)) return Rader(data, N, is_forward, false, fft);
 	if (isPowerOf2(N)) return fft(data, N, is_forward, false);
 
 	unsigned* factors = factor(N);
@@ -475,25 +475,25 @@ void Compare(unsigned N, bool is_display) {
 	else if (isprime(N)) {
 		printf("N is a prime number\n\n");
 
-		printf("Radar's algorithm with recursion Cooley-Tukey radix-2 algorithm :\n");
-		test(x, N, is_display, CooleyTukey_Radix2_Recursion, Radar);
+		printf("Rader's algorithm with recursion Cooley-Tukey radix-2 algorithm :\n");
+		test(x, N, is_display, CooleyTukey_Radix2_Recursion, Rader);
 
-		printf("Radar's algorithm with 8-point butterfly diagram accelerated recursion Cooley-Tukey radix-2 algorithm :\n");
-		test(x, N, is_display, CooleyTukey_Radix2_Recursion_8pointAccelerate, Radar);
+		printf("Rader's algorithm with 8-point butterfly diagram accelerated recursion Cooley-Tukey radix-2 algorithm :\n");
+		test(x, N, is_display, CooleyTukey_Radix2_Recursion_8pointAccelerate, Rader);
 
-		printf("Radar's algorithm with non-recursion Cooley-Tukey radix-2 algorithm :\n");
-		test(x, N, is_display, CooleyTukey_Radix2_nonRecursion, Radar);
+		printf("Rader's algorithm with non-recursion Cooley-Tukey radix-2 algorithm :\n");
+		test(x, N, is_display, CooleyTukey_Radix2_nonRecursion, Rader);
 	}
 	else {
 		printf("N is a composite number\n\n");
 
-		printf("Cooley-Tukey Hybrid-Radix algorithm with Radar's Algorithm having recursion Cooley-Tukey radix-2 algorithm :\n");
+		printf("Cooley-Tukey Hybrid-Radix algorithm with Rader's Algorithm having recursion Cooley-Tukey radix-2 algorithm :\n");
 		test(x, N, is_display, CooleyTukey_Radix2_Recursion, CooleyTukey_HybridRadix);
 
-		printf("Cooley-Tukey Hybrid-Radix algorithm with Radar's Algorithm having 8-point butterfly diagram accelerated Cooley-Tukey radix-2 algorithm :\n");
+		printf("Cooley-Tukey Hybrid-Radix algorithm with Rader's Algorithm having 8-point butterfly diagram accelerated Cooley-Tukey radix-2 algorithm :\n");
 		test(x, N, is_display, CooleyTukey_Radix2_Recursion_8pointAccelerate, CooleyTukey_HybridRadix);
 
-		printf("Cooley-Tukey Hybrid-Radix algorithm with Radar's Algorithm having non-recursion Cooley-Tukey radix-2 algorithm :\n");
+		printf("Cooley-Tukey Hybrid-Radix algorithm with Rader's Algorithm having non-recursion Cooley-Tukey radix-2 algorithm :\n");
 		test(x, N, is_display, CooleyTukey_Radix2_nonRecursion, CooleyTukey_HybridRadix);
 	}
 
