@@ -10,13 +10,13 @@
 // 
 //		* Implement 8-points butterfly diagram Decimation-in-Time algorithm
 //		* Implement radix-2 Cooley-Tukey Fast Fourier Transform algorithm
-//		* Implement Radar's Fast Fourier Transform algorithm
+//		* Implement Rader's Fast Fourier Transform algorithm
 //		* Implement Mixed-radix (Hybrid-radix) Fast Fourier Transform algorithm
 //		* Integration as fft algorithm
 // 
 //		v0.1.1
 //		----------------------------
-//		* Simple optimized Radar's algorithm
+//		* Simple optimized Rader's algorithm
 //		* Fix memory leaks caused by recursion
 // 
 //		v0.2.0
@@ -31,7 +31,7 @@
 //		* Implement _raw_bluesteinfft
 //		* Deprecate (no use)
 //			~ radix2fft	/ radix2ifft
-//			~ radarfft / radarifft
+//			~ raderfft / raderifft
 //			~ hybrid_radixfft / hybrid_radixifft
 //		* Deprecate (replaced)
 //			~ _raw_hybrid_radixfft (replaced by _raw_bluesteinfft)
@@ -138,6 +138,6 @@ dcomplex* ifft(dcomplex* data, unsigned int N, norm_mode mode);
 
 static dcomplex* _raw_radix2fft(dcomplex* data, unsigned N, bool is_forward, bool keep_input);
 
-static dcomplex* _raw_radarfft(dcomplex* data, unsigned N, bool is_forward, bool keep_input);
+static dcomplex* _raw_raderfft(dcomplex* data, unsigned N, bool is_forward, bool keep_input);
 
 static dcomplex* _raw_bluesteinfft(dcomplex* data, unsigned N, bool is_forward, bool keep_input);
