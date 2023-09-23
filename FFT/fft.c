@@ -84,7 +84,7 @@ dcomplex* idft(dcomplex* data, unsigned int N, norm_mode mode) {
 static dcomplex* _execute_fft(dcomplex* data, unsigned int N, bool is_forward) {
 	if (N == 1) return data;
 	if (N == 2) return _raw_radix2fft(data, N, is_forward, true);
-	if (isprime(N)) return _raw_radarfft(data, N, is_forward, true);
+	if (isprime(N)) return _raw_raderfft(data, N, is_forward, true);
 	if (isPowerOf2(N)) return _raw_radix2fft(data, N, is_forward, true);
 	else return _raw_bluesteinfft(data, N, is_forward, true);
 }
@@ -131,7 +131,7 @@ static dcomplex* _raw_radix2fft(dcomplex* data, unsigned N, bool is_forward, boo
 	return result;
 }
 
-static dcomplex* _raw_radarfft(dcomplex* data, unsigned N, bool is_forward, bool keep_input) {
+static dcomplex* _raw_raderfft(dcomplex* data, unsigned N, bool is_forward, bool keep_input) {
 
 	if (N == 1) return data;
 
