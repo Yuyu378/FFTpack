@@ -10,7 +10,6 @@
 #include <Windows.h>
 
 #include "fft.h"
-#include "test.h"
 #include "numeric.h"
 #include "complexlib.h"
 
