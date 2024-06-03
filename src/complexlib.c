@@ -4,12 +4,26 @@
 //      complex library
 //
 
-#include <conio.h>
+#if defined(ARDUINO) // and other C compilers with no <complex.h>
+
 #include <math.h>
+#include <float.h>
 #include <stdio.h>
 #include <stdlib.h>
 
 #include "complexlib.h"
+
+#ifndef _USE_MATH_DEFINES
+#define _USE_MATH_DEFINES
+#endif
+
+#if defined(M_PI) && !defined(PI)
+#define PI M_PI
+#endif
+
+#ifndef PI
+#define PI (3.1415926535897932384626433832795028841971693993751058209749445923)
+#endif
 
 /* double complex type ------------------------------ */
 
@@ -198,7 +212,7 @@ dcomplex cproj(dcomplex z) {
 dcomplex csgn(dcomplex z) {
     if (z.im == 0) {
         // sgn function
-        double sgn = z.re < -__DBL_EPSILON__ ? -1 : z.re > __DBL_EPSILON__;
+        double sgn = z.re < -DBL_EPSILON ? -1 : z.re > DBL_EPSILON;
         return cbuild(sgn, 0.);
     }
     return _Cdivcr(z, cabs(z));
@@ -527,7 +541,7 @@ fcomplex cprojf(fcomplex z) {
 fcomplex csgnf(fcomplex z) {
     if (z.im == 0) {
         // sgn function
-        float sgn = z.re < -__FLT_EPSILON__ ? -1 : z.re > __FLT_EPSILON__;
+        float sgn = z.re < -FLT_EPSILON ? -1 : z.re > FLT_EPSILON;
         return cbuildf(sgn, 0.);
     }
     return _CFdivcr(z, cabsf(z));
@@ -686,11 +700,11 @@ long double cimagl(lcomplex z) {
 }
 
 long double cargl(lcomplex z) {
-    return atan2l(z.im, z.re);
+    return atan2(z.im, z.re);
 }
 
 long double cabsl(lcomplex z) {
-    return sqrtl(z.re * z.re + z.im * z.im);
+    return sqrt(z.re * z.re + z.im * z.im);
 }
 
 long double norml(lcomplex z) {
@@ -708,9 +722,9 @@ lcomplex conjl(lcomplex z) {
 
 lcomplex cacosl(lcomplex z) {
     lcomplex tmp = _CLsubrc(1., _CLpowcr(z, 2.)); // 1 - square(z)
-    lcomplex isqrt_abs_tmp = _CLmulcr(cbuildl(0., 1.), sqrtl(cabsl(tmp)));
+    lcomplex isqrt_abs_tmp = _CLmulcr(cbuildl(0., 1.), sqrt(cabsl(tmp)));
     long double theta = cargl(tmp) / 2.;
-    lcomplex e_iphi = cbuildl(cosl(theta), sinl(theta));
+    lcomplex e_iphi = cbuildl(cos(theta), sin(theta));
     lcomplex ln_longform = clogl(_CLaddcc(z, _CLmulcc(isqrt_abs_tmp, e_iphi)));
     return _CLmulcc(cbuildl(0., -1.), ln_longform);
 }
@@ -718,9 +732,9 @@ lcomplex cacosl(lcomplex z) {
 lcomplex casinl(lcomplex z) {
     lcomplex iz = cbuildl(-z.im, z.re);
     lcomplex tmp = _CLsubrc(1., _CLpowcr(z, 2.)); // 1 - square(z)
-    long double sqrt_abs_tmp = sqrtl(cabsl(tmp));
+    long double sqrt_abs_tmp = sqrt(cabsl(tmp));
     long double theta = cargl(tmp) / 2.;
-    lcomplex e_iphi = cbuildl(cosl(theta), sinl(theta));
+    lcomplex e_iphi = cbuildl(cos(theta), sin(theta));
     lcomplex ln_longform = clogl(_CLaddcc(iz, _CLmulrc(sqrt_abs_tmp, e_iphi)));
     return _CLmulcc(cbuildl(0., -1.), ln_longform);
 }
@@ -739,8 +753,8 @@ lcomplex catanl(lcomplex z) {
 }
 
 lcomplex ccosl(lcomplex z) {
-    if (z.re == 0) return cbuildl(coshl(z.im), 0);
-    if (z.im == 0) return cbuildl(cosl(z.re), 0);
+    if (z.re == 0) return cbuildl(cosh(z.im), 0);
+    if (z.im == 0) return cbuildl(cos(z.re), 0);
     lcomplex epiz = _CLeulerc(z);
     lcomplex eniz = _CLeulerc(cminusl(z));
     lcomplex up = _CLaddcc(epiz, eniz);
@@ -748,8 +762,8 @@ lcomplex ccosl(lcomplex z) {
 }
 
 lcomplex csinl(lcomplex z) {
-    if (z.re == 0) return cbuildl(0, sinhl(z.im));
-    if (z.im == 0) return cbuildl(sinl(z.re), 0);
+    if (z.re == 0) return cbuildl(0, sinh(z.im));
+    if (z.im == 0) return cbuildl(sin(z.re), 0);
     lcomplex epiz = _CLeulerc(z);
     lcomplex eniz = _CLeulerc(cminusl(z));
     lcomplex up = _CLsubcc(epiz, eniz);
@@ -757,8 +771,8 @@ lcomplex csinl(lcomplex z) {
 }
 
 lcomplex ctanl(lcomplex z) {
-    if (z.re == 0) return cbuildl(0, tanhl(z.im));
-    if (z.im == 0) return cbuildl(tanl(z.re), 0);
+    if (z.re == 0) return cbuildl(0, tanh(z.im));
+    if (z.im == 0) return cbuildl(tan(z.re), 0);
     lcomplex epiz = _CLeulerc(z);
     lcomplex eniz = _CLeulerc(cminusl(z));
     lcomplex up = _CLsubcc(epiz, eniz);
@@ -769,17 +783,17 @@ lcomplex ctanl(lcomplex z) {
 
 lcomplex cacoshl(lcomplex z) {
     lcomplex tmp = _CLsubcr(_CLpowcr(z, 2.), 1.); // square(z) - 1
-    long double sqrt_abs_tmp = sqrtl(cabsl(tmp));
+    long double sqrt_abs_tmp = sqrt(cabsl(tmp));
     long double theta = cargl(tmp) / 2.;
-    lcomplex e_iphi = cbuildl(cosl(theta), sinl(theta));
+    lcomplex e_iphi = cbuildl(cos(theta), sin(theta));
     return clogl(_CLaddcc(z, _CLmulrc(sqrt_abs_tmp, e_iphi)));
 }
 
 lcomplex casinhl(lcomplex z) {
     lcomplex tmp = _CLaddrc(1., _CLpowcr(z, 2.)); // 1 + square(z)
-    long double sqrt_abs_tmp = sqrtl(cabsl(tmp));
+    long double sqrt_abs_tmp = sqrt(cabsl(tmp));
     long double theta = cargl(tmp) / 2.;
-    lcomplex e_iphi = cbuildl(cosl(theta), sinl(theta));
+    lcomplex e_iphi = cbuildl(cos(theta), sin(theta));
     return clogl(_CLaddcc(z, _CLmulrc(sqrt_abs_tmp, e_iphi)));
 }
 
@@ -791,36 +805,36 @@ lcomplex catanhl(lcomplex z) {
 }
 
 lcomplex ccoshl(lcomplex z) {
-    if (z.re == 0) return cbuildl(0, cosl(z.im));
-    if (z.im == 0) return cbuildl(coshl(z.re), 0);
-    long double cosb = cosl(z.im);
-    long double sinb = sinl(z.im);
-    long double prevconst = expl(z.re) / 2.;
-    long double postconst = expl(-z.re) / 2.;
+    if (z.re == 0) return cbuildl(0, cos(z.im));
+    if (z.im == 0) return cbuildl(cosh(z.re), 0);
+    long double cosb = cos(z.im);
+    long double sinb = sin(z.im);
+    long double prevconst = exp(z.re) / 2.;
+    long double postconst = exp(-z.re) / 2.;
     lcomplex prev = _CLmulcr(cbuildl(cosb, sinb), prevconst);
     lcomplex post = _CLmulcr(cbuildl(cosb, -sinb), postconst);
     return _CLaddcc(prev, post);
 }
 
 lcomplex csinhl(lcomplex z) {
-    if (z.re == 0) return cbuildl(0, sinl(z.im));
-    if (z.im == 0) return cbuildl(sinhl(z.re), 0);
-    long double cosb = cosl(z.im);
-    long double sinb = sinl(z.im);
-    long double prevconst = expl(z.re) / 2.;
-    long double postconst = expl(-z.re) / 2.;
+    if (z.re == 0) return cbuildl(0, sin(z.im));
+    if (z.im == 0) return cbuildl(sinh(z.re), 0);
+    long double cosb = cos(z.im);
+    long double sinb = sin(z.im);
+    long double prevconst = exp(z.re) / 2.;
+    long double postconst = exp(-z.re) / 2.;
     lcomplex prev = _CLmulcr(cbuildl(cosb, sinb), prevconst);
     lcomplex post = _CLmulcr(cbuildl(cosb, -sinb), postconst);
     return _CLsubcc(prev, post);
 }
 
 lcomplex ctanhl(lcomplex z) {
-    if (z.re == 0) return cbuildl(0, tanl(z.im));
-    if (z.im == 0) return cbuildl(tanhl(z.re), 0);
-    long double cosb = cosl(z.im);
-    long double sinb = sinl(z.im);
-    long double prevconst = expl(z.re);
-    long double postconst = expl(-z.re);
+    if (z.re == 0) return cbuildl(0, tan(z.im));
+    if (z.im == 0) return cbuildl(tanh(z.re), 0);
+    long double cosb = cos(z.im);
+    long double sinb = sin(z.im);
+    long double prevconst = exp(z.re);
+    long double postconst = exp(-z.re);
     lcomplex prev = _CLmulcr(cbuildl(cosb, sinb), prevconst);
     lcomplex post = _CLmulcr(cbuildl(cosb, -sinb), postconst);
     lcomplex up = _CLsubcc(prev, post);
@@ -829,20 +843,20 @@ lcomplex ctanhl(lcomplex z) {
 }
 
 lcomplex cexpl(lcomplex z) {
-    return _CLmulrc(expl(z.re), cbuildl(cosl(z.im), sinl(z.im)));
+    return _CLmulrc(exp(z.re), cbuildl(cos(z.im), sin(z.im)));
 }
 
 lcomplex clogL(lcomplex z) {
-    return cbuildl(logl(norml(z)) / 2, cargl(z));
+    return cbuildl(log(norml(z)) / 2, cargl(z));
 }
 
 lcomplex clog10l(lcomplex z) {
-    return _CLdivcr(clogl(z), logl(10.));
+    return _CLdivcr(clogl(z), log(10.));
 }
 
 lcomplex csqrtl(lcomplex z) {
     long double phi = cargl(z) / 2.;
-    return _CLmulrc(sqrtl(cabsl(z)), cbuildl(cosl(phi), sinl(phi)));
+    return _CLmulrc(sqrt(cabsl(z)), cbuildl(cos(phi), sin(phi)));
 }
 
 lcomplex cprojl(lcomplex z) {
@@ -856,18 +870,18 @@ lcomplex cprojl(lcomplex z) {
 lcomplex csgnl(lcomplex z) {
     if (z.im == 0) {
         // sgn function
-        long double sgn = z.re < -__LDBL_EPSILON__ ? -1 : z.re > __LDBL_EPSILON__;
+        long double sgn = z.re < -LDBL_EPSILON ? -1 : z.re > LDBL_EPSILON;
         return cbuildl(sgn, 0.);
     }
     return _CLdivcr(z, cabsl(z));
 }
 
 lcomplex _CLeulerr(long double x) {
-    return cbuildl(cosl(x), sinl(x));
+    return cbuildl(cos(x), sin(x));
 }
 
 lcomplex _CLeulerc(lcomplex z) {
-    return _CLmulcr(_CLeulerr(z.re), expl(-z.im));
+    return _CLmulcr(_CLeulerr(z.re), exp(-z.im));
 }
 
 void _CLeulererr(void) {
@@ -880,11 +894,11 @@ lcomplex _CLlognc(lcomplex z, lcomplex n) {
 }
 
 lcomplex _CLlognr(lcomplex z, long double n) {
-    return _CLdivcr(clogl(z), logl(n));
+    return _CLdivcr(clogl(z), log(n));
 }
 
 lcomplex _CLlognz(long double z, lcomplex n) {
-    return _CLdivrc(logl(z), clogl(n));
+    return _CLdivrc(log(z), clogl(n));
 }
 
 void _CLlognerr(void) {
@@ -898,23 +912,23 @@ lcomplex _CLpowcc(lcomplex z, lcomplex n) {
     long double r = cabsl(z);
     long double phi = cargl(z);
     long double theta1 = a * phi;
-    long double theta2 = b * logl(r);
-    lcomplex z1 = cbuildl(cosl(theta1), sinl(theta1));
-    lcomplex z2 = cbuildl(cosl(theta2), sinl(theta2));
-    return _CLmulrc(powl(r, a) * expl(-b * phi), _CLmulcc(z1, z2));
+    long double theta2 = b * log(r);
+    lcomplex z1 = cbuildl(cos(theta1), sin(theta1));
+    lcomplex z2 = cbuildl(cos(theta2), sin(theta2));
+    return _CLmulrc(pow(r, a) * exp(-b * phi), _CLmulcc(z1, z2));
 }
 
 lcomplex _CLpowcr(lcomplex z, long double n) {
     long double theta = n * cargl(z);
-    return _CLmulrc(powl(cabsl(z), n), cbuildl(cosl(theta), sinl(theta)));
+    return _CLmulrc(pow(cabsl(z), n), cbuildl(cos(theta), sin(theta)));
 }
 
 lcomplex _CLpowrc(long double z, lcomplex n) {
-    long double tmp = powl(z, n.re);
-    long double theta = n.im * logl(z > 0 ? z : -z);
-    lcomplex z0 = cbuildl(cosl(theta), sinl(theta));
+    long double tmp = pow(z, n.re);
+    long double theta = n.im * log(z > 0 ? z : -z);
+    lcomplex z0 = cbuildl(cos(theta), sin(theta));
     if (z > 0) return _CLmulrc(tmp, z0);
-    if (z < 0) return _CLmulrc(tmp * expl(-PI * n.im), z0);
+    if (z < 0) return _CLmulrc(tmp * exp(-PI * n.im), z0);
 }
 
 void _CLpowerr(void) {
@@ -981,7 +995,7 @@ void _CLmulerr(void) {
 lcomplex _CLdivcc(lcomplex a, lcomplex b) {
     long double arg = cargl(a) - cargl(b);
     long double abs = cabsl(a) / cabsl(b);
-    return cbuildl(abs * cosl(arg), abs * sinl(arg));
+    return cbuildl(abs * cos(arg), abs * sin(arg));
 }
 
 lcomplex _CLdivcr(lcomplex a, long double b) {
@@ -996,3 +1010,5 @@ void _CLdiverr(void) {
     fprintf(stderr, "TypeError: cdivl( <lcomplex, long double> a, <lcomplex, long double> b).\n");
     exit(EXIT_FAILURE);
 }
+
+#endif

@@ -5,8 +5,10 @@
 //
 
 #pragma once
-#ifndef _COMPLEXLIB_H_
-#define _COMPLEXLIB_H_
+
+#if defined(ARDUINO)
+
+#include <math.h>
 
 typedef struct double_complex_t {
     double re;
@@ -22,10 +24,6 @@ typedef struct long_double_complex_t {
     long double re;
     long double im;
 } lcomplex;
-
-#ifndef PI
-#define PI (3.1415926535897932384626433832795028841971693993751058209749445923)
-#endif
 
 /* double complex type ------------------------------ */
 
